@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <?xml version="1.0" encoding="UTF-8" ?>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>+++ DEV VERSION +++ 2040 LRTP Needs Assessment Data Browser</title>
+		
+        <!-- JS FILE HAS TO BE IN HERE for CSS tags relating to "simple-sliding-doors" to work  
+		<script type="text/javascript">document.documentElement.className += " js";</script>-->
+        <link rel="stylesheet" type="text/css" href="simple-sliding-doors/simple-sliding-doors.css"/>
+        <!-- STILL NEED THIS AND STYLE FILES BELOW   MMCS, June 2014  -->
+        <link rel="stylesheet" href="simple-sliding-doors/tabs.css" type="text/css">
+        <!--<link rel="stylesheet" href="../tabs_comparison/styles.css" type="text/css">-->
+		
+        <link rel="stylesheet" type="text/css" href="plan_master.css"/>	
+		
+		<!-- jQuery library. -->
+        <script src="../../../libs/jquery/jquery-1.7.1/jquery-1.7.1.js"></script>
+		<!-- Underscore library. -->
+		<script src="../../../libs/underscore/underscore-1.8.3/underscore.js"></script>
+		<!-- OpenLayers library. -->
+		<script src="../../../libs/openlayers/Openlayers-4.2.0/build/ol.js"></script>
+		<link rel="stylesheet" href="../../../libs/openlayers/Openlayers-4.2.0/css/ol.css" type="text/css">
+		<!-- Proj4 library. -->
+		<script src="../../../libs/proj4js/proj4js-2.4.3/dist/proj4-src.js"></script>
+
+		<!-- OpenLayers add-in layer switcher control. -->
+		<script src="../../../libs/ol-layerswitcher-master/dist/ol-layerswitcher.js"/></script>
+		<link rel="stylesheet" href="../../../libs/ol-layerswitcher-master/src/ol-layerswitcher.css" type="text/css">
+		<!-- Main application code. -->
+        <script src="plan_master.js" type="text/javascript"></script>	
+        <!-- Accessible Grid JS library. -->
+        <script src="accessibleGridMPM.js" type="text/javascript"></script>
+		
+		<!-- Stuff for Google Analytics. -->
+        <script type="text/javascript">  
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-39489988-1']);
+			_gaq.push(['_setDomainName', 'ctps.org']);
+			_gaq.push(['_setAllowLinker', true]);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>				
+</head>
+<body onload="CTPS.lrtpApp.init()">
+
+	<div class="ctpsHeader">
+		<div class="lightBlue"></div>
+		<div class="darkBlue"></div>
+		<a href="http://ctps.org/" target="_blank" title="Boston MPO">
+			<img src="images/ctps_header.png" title="Opens Boston MPO website in a new window" id ="banner" >
+		</a>
+	</div>
+
+	<div>
+		<img src="images/header_bar01.png" width="100%" height="25">
+	</div>
+	<h1 id="top_heading">+++ DEVELOPMENT VERSION +++ 2040 Long Range Transportation Plan -- Needs Assessment</h1>
+	<div id="notseen01" class="offscreen">
+		On initial load links which display map layers and tables, all of which are Level 3 headings, are closed and need to be opened.  
+		Click on desired link, <br/>insert choice as required, and tab to 'GET DATA' button to display desired data table. Then use table commands to read.
+	</div>
+	
+	<span class="start_bank">
+		<input type="button" id="About" value="About" alt="information about the M P O and the Long Range Transportation Plan">
+		<input type="button" id="Help" value="Help" alt="detailed explanation of selected data items">
+		<input type="button" id="Comment" value="Submit a Comment" alt="links to comment page">
+	</span>
+	<br/><br/>
+	<a name="top"></a>
+
+	<div id="left_wrapper">
+		<div id="legend_wrapper_outer">
+			<!-- The town boundary layer is always present in the map. -->
+			<div id="legend_wrapper_towns">
+				<div id="legend_header_towns" class="legend_text">City and Town Boundaries</div>
+				<div id="legend_div_towns"><img src="images/towns_legend.png"></img></div>
+			</div>
+			<div id="legend_wrapper_1">
+				<div id="legend_header_1" class="legend_text"></div>
+				<div id="legend_div_1"></div>
+			</div>
+			<div id="legend_wrapper_2">
+				<div id="legend_header_2" class="legend_text"></div>
+				<div id="legend_div_2"></div>
+			</div>			
+			<div id="legend_wrapper_3">
+				<div id="legend_header_3" class="legend_text"></div>
+				<div id="legend_div_3"></div>
+			</div>
+			<div id="legend_wrapper_4">
+				<div id="legend_header_4" class="legend_text"></div>
+				<div id="legend_div_4"></div>
+			</div>
+			<div id="legend_wrapper_5">
+				<div id="legend_header_5" class="legend_text"></div>
+				<div id="legend_div_5"></div>
+			</div>				
+		</div> <!-- legend_wrapper_outer -->
+	</div>
+	
+	<div id="right_wrapper">
+		<div id="map">
+		</div>	
+		<div id="top_wrapper"> 
+						<h2>Map display choices:</h2>
+						<div class="select_box_div">
+							<select id="selected_corridor" name="Select a corridor">
+								<option value="Region">Select regional corridor (or entire region)</option>
+								<option value="N">North</option>
+								<option value="NE">Northeast</option>
+								<option value="NW">Northwest</option>
+								<option value="W">West</option>
+								<option value="SW">Southwest</option>
+								<option value="SE">Southeast</option>
+								<option value="Core">Central Area</option>
+								<option value="Region">Boston MPO</option>
+							</select>
+							<input type="button" id='all_clear_map' class="map_button_v2" value="Clear All Map Layers"/>
+						</div>				
+						<div class="select_box_div">
+							<select id="selected_demographic_layer" name="Select a demographic factor">
+								<option value="no_demog">Select demographic layer</option>
+								<option value="2010pop">Population Density 2010</option>
+								<option value="2040pop">Population Density 2040</option>
+								<option value="changePop">Popluation Density Change 2010-2040</option>
+								<option value="catchment">Areas Beyond Transit Service</option>
+								<option value="2010emp">Employment Density 2010</option>
+								<option value="2040emp">Employment Density 2040</option>
+								<option value="changeEmp">Employment Density Change 2010-2040</option>
+								<option value="eldPop">Population Older than 75</option>
+								<option value="eldPct">Percent of Population Older than 75</option>
+								<option value="youthPop">Population Younger than 18</option>
+								<option value="youthPct">Percent of Population Younger than 18</option>
+								<option value="disabledPop">Disabled Population</option>
+								<option value="disabledPct">Percent of Population Disabled</option>
+								<option value="minorityPop">Minority Population</option>
+								<option value="minorityPct"/>Percent of Population Minority</option>								
+								<option value="lepPop">Population with Limited English Proficieny</option>
+								<option value="lepPct">Percent of Population with Limited English Proficiency</option>
+								<option value="TitleVI">Title VI Areas</option>
+								<option value="EJConcern">Areas of Environmental Justice Concern</option>
+								<option value="elderlyZone">Areas Exceeding Elderly Population Threshold</option>									
+								<option value="youthZone">Areas Exceeding Youth Population Threshold</option>										
+								<option value="disabledZone">Areas Exceeding Disabled Population Threshold</option>								
+								<option value="zvhhZone">Areas Exceeding Zero Vehicle Household Threshold</option>										
+								<option value="2010HH">Household Density 2010</option>
+								<option value="2040HH">Household Density 2040</option>
+								<option value="changeHH">Change in Number of Households 2010-2040</option>
+								<option value="zero_veh_hh">Number of Zero-vehicle Households</option>						
+								<option value="zero_veh_hh_pct">Percent of Households with Zero Vehicles</option>
+								<option value="low_inc_hh">Number of Low income Households</option>
+								<option value="low_inc_hh_pct">Percent of Households with Low income</option>
+							</select>
+							<input type="button" id="Demographic_clear" class="map_button_v2" value="Clear Demographic Layer" alt="clears demographic data displayed on map">
+						</div>
+						<div class="select_box_div">
+							<select id="selected_transportation_layer" name="Select transportation layer"> 
+								<option value="choose_transportation_layer">Select transportation infrastructure layer</option>
+								<option value="highway"/>Major roadways</option>
+								<option value="pavement">Pavement condition</option>
+								<option value="RT">MBTA Rapid Transit</option>
+								<option value="CR">MBTA Commuter Rail</option>
+								<option value="buses"/>MBTA Bus Routes</option>
+								<option value="airports_etc">Airports/MassDOT Park-Ride Lots/Docks</option>
+								<option value="bikes">Dedicated Bicycle Paths</option>
+								<option value="ferries">Commuter Ferries</option>
+								<option value="truckgen">Selected Truck Trip Generators</option>
+								<option value="rail_freight"/>Rail Freight Lines</option>
+							</select> <!-- End of select on transportation layer --> 
+							<input type="button" id="Infrastructure_clear" class="map_button_v2" value="Clear Infrastructure Layer" alt="clears transportation infrastructure data displayed on map">
+						</div> 
+						<!-- The following <div> is logically - but NOT physically - nested. -->
+						<div class="select_box_div_nested_1">
+							<form name="drop_list" id="drop_list" action="" method="POST">
+								<select id="route_name">
+									<option value="">Select bus route</option>
+								</select>
+							</form>
+						</div>
+						<div class="select_box_div">
+							<select id="selected_crash_layer" name="Select a category of crash data">
+								<option value="choose_crash_layer">Select crash layer</option>
+								<option value="crashes">All Crashes</option>
+								<option value="bike_crashes">Crashes involving bicylists</option>
+								<option value="ped_crashes">Crashes involving pedestrians</option>
+							</select>
+							<input type="button" id="Crash_clear" class="map_button_v2" value="Clear Crash Layer" alt="clears crash data displayed on map">
+						</div>
+						<div class="select_box_div">
+							<select id="selected_voc_layer" name="Select a category of volume-to-capacity ratio data">
+								<option value="chose_voc_layer">Select volume/capacity ratio layer</option>
+								<option value="VOC2016_AM_E">2016 AM - Expressways</option>
+								<option value="VOC2016_AM_A">2016 AM - Arterials</option>
+								<option value="VOC2016_PM_E">2016 PM - Expressways</option>
+								<option value="VOC2016_PM_A">2016 PM - Arterials</option>
+								<option value="VOC2040_AM_E">2040 AM - Expressways</option>
+								<option value="VOC2040_AM_A">2040 AM - Arterials</option>
+								<option value="VOC2040_PM_E">2040 PM - Expressways</option>
+								<option value="VOC2040_PM_A">2040 PM - Arterials</option>
+							</select> <!-- End of select on VOC data -->
+							<input type="button" id="VOC_clear" class="map_button_v2" value="Clear V/C Ratio Layer" alt="clears volume-to-capacity ratio data displayed on map">
+						</div>					
+						<div class="select_box_div">
+							<select id="selected_truck_layer" name="Select truck data">
+								<option value="choose_truck_layer">Select truck trip density layer</option>
+								<option value="2016trucks">Truck Trip Density 2016</option>
+								<option value="2040trucks">Truck Trip Density 2040</option>
+								<option value="change_trucks">Change in Truck Trip Density 2016-2040</option>
+							</select> <!-- End of select on truck data -->
+							<input type="button" id="Truck_clear" class="map_button_v2" value="Clear Truck Layer" alt="clears truck data displayed on map">
+						</div>					
+						<h3>
+							<a href="#" id="main_OD" title="link opens separate page with origin-destination info">
+								Origin-Destination Flows Between Regions<span class='midfont'>&nbsp;&nbsp;&nbsp;&nbsp;(Opens in new window)</span>
+							</a>
+						</h3>
+						<h3>
+							<a href="#" id="second_OD" title="link opens separate page with corridor trips to Boston & central area">
+								Trips from Regions to Boston and Central Area<span class='midfont'>&nbsp;&nbsp;&nbsp;&nbsp;(Opens in new window)</span>
+							</a>
+						</h3>					
+						<h2>Data table choices:</h2>
+						<span class='midfont'>
+							Select table data category of interest
+							<em>
+								<small>(toggle category name to open/close):</small>
+							</em>
+						</span>
+						<!--        (After table opens, click on map to identify individual TAZs in table, <br />or on table row to identify TAZ on map.)</em></span>   -->
+						<input type='button' id='all_clear_tables' value='Clear Data Tables'/>
+						<h3>
+							<a href="#" id="table_socioeconomic" class="tables" >Socioeconomic Data Table - by Municipality</a>
+						</h3>					
+						<fieldset id='socioeconomic_table' class='hidden'> <!-- Start of socioeconomic_table fieldset     -->
+							<legend>
+								<span class='fieldset_heading'>Socioeconomic Data Table</span>
+							</legend>
+							<span class='midfont'>
+								<label for="townName">Select a municipality:</label>
+								<span class="town_box">
+									<span class='town_select'>
+										<select id="selected_town" name="Select a municipality">
+											<option value="municipality">Select a municipality :</option>
+											<option value="Acton"> Acton </option>
+											<option value="Arlington"> Arlington </option>
+											<option value="Ashland"> Ashland </option>
+											<option value="Bedford"> Bedford </option>
+											<option value="Bellingham"> Bellingham </option>
+											<option value="Belmont"> Belmont </option>
+											<option value="Beverly"> Beverly </option>
+											<option value="Bolton"> Bolton </option>
+											<option value="Boston"> Boston </option>
+											<option value="Boxborough"> Boxborough </option>
+											<option value="Braintree"> Braintree </option>
+											<option value="Brookline"> Brookline </option>
+											<option value="Burlington"> Burlington </option>
+											<option value="Cambridge"> Cambridge </option>
+											<option value="Canton"> Canton </option>
+											<option value="Carlisle"> Carlisle </option>
+											<option value="Chelsea"> Chelsea </option>
+											<option value="Cohasset"> Cohasset </option>
+											<option value="Concord"> Concord </option>
+											<option value="Danvers"> Danvers </option>
+											<option value="Dedham"> Dedham </option>
+											<option value="Dover"> Dover </option>
+											<option value="Essex"> Essex </option>
+											<option value="Everett"> Everett </option>
+											<option value="Foxborough"> Foxborough </option>
+											<option value="Framingham"> Framingham </option>
+											<option value="Franklin"> Franklin </option>
+											<option value="Gloucester"> Gloucester </option>
+											<option value="Hamilton"> Hamilton </option>
+											<option value="Hingham"> Hingham </option>
+											<option value="Holbrook"> Holbrook </option>
+											<option value="Holliston"> Holliston </option>
+											<option value="Hopkinton"> Hopkinton </option>
+											<option value="Hudson"> Hudson </option>
+											<option value="Hull"> Hull </option>
+											<option value="Ipswich"> Ipswich </option>
+											<option value="Lexington"> Lexington </option>
+											<option value="Lincoln"> Lincoln </option>
+											<option value="Littleton"> Littleton </option>
+											<option value="Lynn"> Lynn </option>
+											<option value="Lynnfield"> Lynnfield </option>
+											<option value="Malden"> Malden </option>
+											<option value="Manchester"> Manchester </option>
+											<option value="Marblehead"> Marblehead </option>
+											<option value="Marlborough"> Marlborough </option>
+											<option value="Marshfield"> Marshfield </option>
+											<option value="Maynard"> Maynard </option>
+											<option value="Medfield"> Medfield </option>
+											<option value="Medford"> Medford </option>
+											<option value="Medway"> Medway </option>
+											<option value="Melrose"> Melrose </option>
+											<option value="Middleton"> Middleton </option>
+											<option value="Milford"> Milford </option>
+											<option value="Millis"> Millis </option>
+											<option value="Milton"> Milton </option>
+											<option value="Nahant"> Nahant </option>
+											<option value="Natick"> Natick </option>
+											<option value="Needham"> Needham </option>
+											<option value="Newton"> Newton </option>
+											<option value="Norfolk"> Norfolk </option>
+											<option value="North Reading"> North Reading </option>
+											<option value="Norwell"> Norwell </option>
+											<option value="Norwood"> Norwood </option>
+											<option value="Peabody"> Peabody </option>
+											<option value="Quincy"> Quincy </option>
+											<option value="Randolph"> Randolph </option>
+											<option value="Reading"> Reading </option>
+											<option value="Revere"> Revere </option>
+											<option value="Rockland"> Rockland </option>
+											<option value="Rockport"> Rockport </option>
+											<option value="Salem"> Salem </option>
+											<option value="Saugus"> Saugus </option>
+											<option value="Scituate"> Scituate </option>
+											<option value="Sharon"> Sharon </option>
+											<option value="Sherborn"> Sherborn </option>
+											<option value="Somerville"> Somerville </option>
+											<option value="Southborough"> Southborough </option>
+											<option value="Stoneham"> Stoneham </option>
+											<option value="Stow"> Stow </option>
+											<option value="Sudbury"> Sudbury </option>
+											<option value="Swampscott"> Swampscott </option>
+											<option value="Topsfield"> Topsfield </option>
+											<option value="Wakefield"> Wakefield </option>
+											<option value="Walpole"> Walpole </option>
+											<option value="Waltham"> Waltham </option>
+											<option value="Watertown"> Watertown </option>
+											<option value="Wayland"> Wayland </option>
+											<option value="Wellesley"> Wellesley </option>
+											<option value="Wenham"> Wenham </option>
+											<option value="Weston"> Weston </option>
+											<option value="Westwood"> Westwood </option>
+											<option value="Weymouth"> Weymouth </option>
+											<option value="Wilmington"> Wilmington </option>
+											<option value="Winchester"> Winchester </option>
+											<option value="Winthrop"> Winthrop </option>
+											<option value="Woburn"> Woburn </option>
+											<option value="Wrentham"> Wrentham </option>
+										</select>
+										<input type="button" id="searchForTown" value="Find municipality" alt="Adds entered town to list for which data will be pulled"/>
+									</span>
+								</span>
+					
+								<span class="table_directions">
+									Select a municipality from the list above, then click Find Municipality button below. Click the Get Data button to retrieve data for all TAZs within the selected municipality. Clicking DOWNLOAD DATA button will download the table in the Tab currently displayed to a CSV file.<br/>
+									<em>(After table opens, click on table row to identify individual TAZs on map.)</em>
+								</span>
+							
+								<div id='table_buttons'>
+									<!-- "searchForTown" used to be located here. -->
+									<input type="button" id="getSETable" value="Get socioeconomic data" alt="Opens socioeconomic data table for selected town"/>
+									<span class="spanForButtonWithLink">
+										<input type="button" id="downloadSEData" value="Download data" alt="Downloads table for selected towns to comma-separated or Excel file"/>
+										<a id="downloadAnchorTag1" href=""></a>
+									</span>
+									<input type="button" id="clearSETable" value="Clear table"/>
+									<br/>
+								</div>  <!-- End of table_buttons div -->
+							</span> <!-- span with class="midfont" -->
+						</fieldset> <!--  End of socioeconomic_table fieldset  -->		
+							
+						<h3>
+							<a href="#" id="table_transportation">Transportation Data Table - by Corridor</a>
+						</h3>
+						<fieldset id='transportation_table' class='hidden'>  <!--  Start of transportation_table (corridor-specific transportation data) fieldset -->
+							<legend>
+								<span class='fieldset_heading'>Transportation Data Table -- Corridor</span>
+							</legend>
+							<!--  populate the combo box to allow choosing subregion  -->
+							<span class='oneline'> <!--  Start span 'oneline'  -->
+								<span class='midfont'>Select corridor: </span>
+								<span class='subregion_select'>
+									<select id="table_subregion" title="Select a subregion">
+										<option value="">Select corridor:</option>
+										<option value="N">North</option>
+										<option value="NE">Northeast</option>
+										<option value="NW">Northwest</option>
+										<option value="W">West</option>
+										<option value="SW">Southwest</option>
+										<option value="SE">Southeast</option>
+										<option value="Core">Central Area</option>
+									</select>
+								</span>
+							</span> <!--  End span 'oneline'  -->
+							<br/>
+					
+							<span class="table_directions">
+								Available tables include: crashes with EPDO (Equivalent Property Damage Only) index, roadway segments with highest volume-capacity (VC) ratios, speed and travel time indices, commuter rail stations, and others.
+								<br/>
+								(click HELP button for more info)
+							</span>
+							<br/>
+							
+							<div id='TR_buttons'>
+								<input type="button" id="getTableTR" class="hidden2" alt="Opens table with multiple tabs with transportation data for selected subregion" value="Get corridor data"/>
+								<span class="spanForButtonWithLink">
+									<input type="button" class="hidden2" id="downloadTRData" value="Download data" alt="Download transportation data table to comma-separated file or Excel"/>
+									<!--  onclick="CTPS.lrtpApp.getStuff()" />   -->
+									<a id="downloadAnchorTag2" href=""></a>
+								</span>
+								<input type="button" id="clearTRTable" value="Clear table" class="hidden2"/>
+								<br/>
+								<!-- onclick="CTPS.lrtpApp.clearTable()" /><br />   -->
+							</div> <!-- End of TR_buttons div -->
+						</fieldset> <!-- End of transportation_table data fieldset  -->	
+						
+						<h3>
+							<a href="#" id="table_transportation_all" class="tables">Transportation Data Table - Regionwide</a>
+						</h3>					
+						<fieldset id='transportation_table_all' class='hidden'> <!-- Start of transportation_table_all (region-wide transportation data) fieldset -->
+							<legend>
+								<span class='fieldset_heading'>Transportation Data Table Regionwide</span>
+							</legend>
+							<span class="table_directions">Available tables include airports, MassDOT park-ride lots, boat docks and multi-use recreational paths within the Boston region.</span>
+							<br/>
+							<div id='TR_regionwide_buttons'>
+								<input type="button" id="fetchRegionwideTable" value="Get regionwide data" alt="Get single table with multiple tabs for regionwide data"/>
+								<span class="spanForButtonWithLink">
+									<input type="button" id="downloadTRRegionwideData" value="Download data"/>
+									<a id="downloadAnchorTag3" href=""></a>
+								</span>
+								<input type="button" id="clearTRRegionTable" value="Clear table"/>
+								<br/>
+							</div> <!-- End of TR_regionwide_buttons div -->
+						</fieldset>  <!-- End of transportation_table_all fieldset -->		
+			
+		</div>
+	</div>
+	
+	<div id="bottom_wrapper">
+		<div id="all_tabs_div" class="unhidden"> 
+		<div id="mytabs" class="tabs hidden"> <!-- Start of divs for demographic data tables   -->
+			<h2 id="population_grid">Population</h2>
+			<div class="tabbody">
+				<div id="pop_grid"></div>
+			</div>
+			<h2 id="household_grid">Households</h2>
+			<div class="tabbody">
+				<div id="hh_grid"></div>
+			</div>
+			<h2 id="employment_grid">Employment</h2>
+			<div class="tabbody">
+				<div id="emp_grid"></div>
+			</div>				
+		</div> <!-- End of divs for demographic data tables   -->
+		<div id="mytabs2" class="tabs hidden"> <!--  Start of divs for corridor-specific transportation data tables -->
+			<h2 id="TR01_grid">Top 5% Crashes</h2>
+			<div class="tabbody">
+				<div id="crash_grid"></div>
+			</div>
+			<h2 id="TR02_grid">Volume-to-Capacity Ratio</h2>
+			<div class="tabbody">
+				<div id="VOC_grid"></div>
+			</div>
+			<h2 id="TR04_grid">Speed Index</h2>
+			<div class="tabbody">
+				<div id="spd_idx_grid"></div>
+			</div>
+			<h2 id="TR05_grid">Travel Time Index</h2>
+			<div class="tabbody">
+				<div id="tt_grid"></div>
+			</div>
+			<h2 id="TR03_grid">Commuter Rail Stations</h2>
+			<div class="tabbody">
+				<div id="CRStn_grid"></div>
+			</div> 
+		</div> <!--  End of divs for corridor-specific transportation data tables -->
+		<div id="mytabs3" class="tabs hidden"> <!-- Start of divs for region-wide transportation data tables -->
+			<h2 id="TRR01_grid">Airports</h2>
+			<div class="tabbody">
+				<div id="airport_grid"></div>
+			</div>
+			<h2 id="TRR02_grid">Park-and-Ride Lots</h2>
+			<div class="tabbody">
+				<div id="PRlots_grid"></div>
+			</div>
+			<h2 id="TRR03_grid">Boat Docks</h2>
+			<div class="tabbody">
+				<div id="boatdocks_grid"></div>
+			</div>
+			<h2 id="TRR04_grid">Bicycle Paths</h2>
+			<div class="tabbody">
+				<div id="bikes_grid"></div>
+			</div>
+		</div> <!-- End of divs for region-wide transportation data tables -->
+	</div>  <!-- Here: end of all divs for data tables.    -->
+	</div> <!-- bottom_wrapper -->
+	
+	<div id="download-window" class="x-hidden"></div>
+</body>
+</html>

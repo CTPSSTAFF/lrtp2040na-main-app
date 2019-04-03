@@ -1,0 +1,106 @@
+h3 {font-size: 1.3em;}
+h4 {margin-bottom: 0.25em;}
+ul {margin-top: 15px;}
+code {background-color: #eaeaea; font-size: 1.2em;}
+#jumpMenu ul {float: left; margin: 0 0 1em; padding-left: 10px;}
+#jumpMenu p {float: left; margin: 0;font-size: 0.9em;}
+#jumpMenu li {
+	float: left; 
+	list-style: none; 
+	margin: 0 20px 0 0;
+	font-size: 0.9em;
+}
+h1, .sectionNav {clear: both;}
+.skip {clear: left;}
+.tabs {
+	width: 100%;
+	margin: 2em 0;
+}
+.tabsMenu {
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.tabsMenu li {
+	position: relative; /*for z-index*/
+	top: 1px;
+	display: inline;
+	float: left;
+	font-weight: bold;
+	color: #ccc;
+	background-color: #fff;
+	height: 1%; /*for ie6*/
+	margin: 0 5px 0 0;
+	border: 1px solid #666;
+	border-bottom: none;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	z-index: 1
+}
+.tabsMenu li.current {
+	position: relative;
+	clear: none; /*for ie6*/
+	color: #000;
+	border-color: #000;
+	z-index: 10;
+}
+.tabsMenu a {
+	float: left;
+	font-size: 0.9em;
+	color: #3A194A;
+	background-color: transparent;
+	margin: 0;
+	padding: 0.5em;
+	border-bottom: 1px solid #ddd;/*border bottom instead of border:none because of ie6*/
+}
+
+.tabsMenu a:hover, .tabsMenu a:focus, .tabsMenu a:active {color: #fff; background-color: #5A2773;}
+
+.tabsMenu li.current a {
+	color: #000;
+	background-color: #ddd;
+	border-bottom-color: #ddd;/*for ie6*/
+}
+.tabsMenu li.current a:hover, .tabsMenu li.current a:focus, .tabsMenu li.current a:active {color: #000; background-color: #ddd; border-bottom: 1px solid #ddd;/*for ie6*/}
+.tab {
+	position: relative;  /*for z-index*/
+	display: block;
+	clear: left;
+	height: auto;
+	overflow: auto;
+	padding: 1em 2em;
+	border: 1px solid #ddd;
+	-moz-border-radius: 0 3px 3px;
+	-webkit-border-radius: 0 3px 3px;
+	border-radius: 0 3px 3px;
+	z-index: 5;
+	background-color: #e9f7fe                /*   #ddd;           */
+}
+.tab p {font-size: 0.9em;}
+.tab h2, .mainH2, .tabsMenu a span {
+	position: absolute;
+	left: -99999px;
+}
+.box {
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#eaeaea));
+	background: -moz-linear-gradient(center top , #ffffff, #fafafa);
+	border: 1px solid;border-color: #ccc #999 #999 #ccc;
+	font-size: 0.9em;
+	margin: 2em 0 1em;
+	padding: 0 20px 15px;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	border-radius: 0.5em;
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+@media (max-width: 600px) {
+	.tabsMenu li {width: 25%; text-align: center;}
+	.tabsMenu a {font-size: 0.8em;}
+}

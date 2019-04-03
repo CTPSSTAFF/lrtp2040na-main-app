@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>District Codes Look-Up Table</title>
+
+<style type="text/css">
+
+#bigbox {
+    border: 3px ridge #b22400; 
+    padding: 25px;
+    margins: 1px;
+}
+h2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.2em;
+	color: #1d52c2;
+	width: 600px;
+	margin: 0 40px 0 0;	
+}
+h3 {
+    color: #b22400;
+    border-bottom: 1px solid #1d52c2;
+	overflow: hidden;
+}
+p {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .9em;
+	color: #000000;
+}
+a {
+    text-decoration: none;
+}
+a.button {    
+    border: solid 1px #1d52c2;
+    background-color: #1d52c2;
+    padding: 2px 2px 2px 2px;
+    color: #fff;
+    
+}
+a.button:hover {
+    background-color: #fff;
+    color: #1d52c2;
+}
+
+
+caption {
+    font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.2em;
+	color: #1d52c2;
+}
+th {
+    text-align: left;
+    vertical-align: bottom;
+}
+td {
+    vertical-align: top;
+}
+
+.offscreen {
+	position: absolute;
+	left: -500em;
+	top: -100em;
+}
+
+
+
+
+</style>
+
+<script src="mpmutils.js" type="text/javascript"></script> 
+
+<script TYPE="text/javascript">
+
+function targetopener(mylink, closeme, closeonly)
+{
+if (! (window.focus && window.opener))return true;
+window.opener.focus();
+if (! closeonly)window.opener.location.href=mylink.href;
+if (closeme)window.close();
+return false;
+}
+
+function createTable(){
+   var szTbl = '<table><caption>CODES FOR MODELING DISTRICTS</caption><thead><th>DISTRICT CODE</th><th>INCLUDED TOWNS</th></thead>';
+   var district, dist_description;
+   var rec = [];
+   var rec = MPMUTILS.modelRegions_2012;
+   for (i = 0; i < rec.length; i++) {           
+        district = rec[i][0];
+        dist_description = rec[i][1];
+        szTbl += '<tr><td>' + district + '</td><td>' + dist_description + '</td></tr>'; 
+    }
+    var rec2 = [];
+    var rec2 = MPMUTILS.externals_2012;
+    district = '';
+    dist_description = '<strong>EXTERNAL ZONES:</strong>';
+    szTbl += '<tr><td>' + district + '</td><td>' + dist_description + '</td></tr>';
+    for (i = 0; i < rec2.length; i++) {           
+        district = rec2[i][0];
+        dist_description = rec2[i][1];
+        szTbl += '<tr><td>' + district + '</td><td>' + dist_description + '</td></tr>'; 
+    }    
+    szTbl += '</table>';
+    document.getElementById('regions_table').innerHTML = szTbl;
+}
+
+
+
+</script>
+
+
+
+</head>
+
+<body onload='createTable()'>
+
+<div id="notseen01" class="offscreen">Table of O D districts with included towns for each.  Column 1 is district number, Column 2 lists included towns for each.  
+</div>
+
+
+
+<div id="closeLink2">
+	<a href="index.html" class="button"
+	onclick="return targetopener(this,true,true)">Close window</a>   
+</div>			<!--   END OF CLOSELINK  -->
+
+<br />
+<div id='bigbox'>
+<div id='regions_table'></div>
+</div>          <!--   END OF BIGBOX    -->
+<br />
+
+<div id="closeLink">
+	<a href="index.html" class="button"
+	onclick="return targetopener(this,true,true)" >Close window</a>   
+</div>			<!--   END OF CLOSELINK  -->
+
+          
+
+</body>
+</html>

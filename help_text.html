@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>"HELP" on data items</title>
+
+
+
+
+<script type="text/javascript">
+
+
+
+function targetopener(mylink, closeme, closeonly)
+{
+if (! (window.focus && window.opener))return true;
+window.opener.focus();
+if (! closeonly)window.opener.location.href=mylink.href;
+if (closeme)window.close();
+return false;
+}
+
+
+</script>
+
+
+<style type="text/css">
+#bigbox2 {
+	width: 800px;
+	height: 1800px;
+	margin: 0 40px 0 5px;
+	padding: 15px;
+	background: #ffffff;
+	border: 2px solid #288474;                    /*    #b87f32;   */
+}
+
+h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.2em;
+	color: #143987;
+	width: 800px;
+	margin: 0 40px 0 0;
+	padding: 5px;
+}
+
+h3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.0em;
+	color: #1d52c2;
+	width: 800px;
+}
+
+p {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.0em;
+	color: #000000;
+}
+
+li {
+     font-family: Arial, Helvetica, sans-serif;
+     font-size: 1.0em;
+     color: black;
+     font-style: italic; 
+    }
+    
+ul li.subdivision_heading{
+   list-style-type: none;
+   background-image: url('images/bullet_green.png');
+   background-position: 0 5px;
+   background-repeat: no-repeat;
+   padding-left: 1.5em;
+}
+
+#closePopup {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+
+.button { 
+    text-decoration: none;
+    border: solid 1px #1d52c2;
+    background-color: #1d52c2;   
+    padding: 2px 2px 2px 2px;
+    color: #fff;
+    
+}
+
+.button:hover {
+    background-color: #fff;
+    color: #1d52c2;
+}
+
+
+
+</style>
+
+
+  
+</head>
+
+
+<body>
+
+<div id="closePopup">
+	<span type="button" class="button" onclick="return targetopener(this,true,true)">Close window</a>   
+</div>			<!--   END OF CLOSELINK  -->
+
+<br />
+
+<h1>Additional Information for Select Application Features</h1>
+
+<div id="bigbox2">
+
+<h3>Areas beyond the Transit Range</h3>
+<p>
+The Areas beyond the Transit Range map shows transit services, population density, and the catchment areas around commuter rail and rapid transit stations and bus stops. For commuter rail and rapid transit stations, a half-mile catchment area for walk access is assumed, while the catchment area for bus stops is a quarter mile.
+</p>
+<h3>Environmental Justice Areas</h3>
+    <ul>
+    <li class="subdivision_heading">Boston Region MPO Environmental Justice Areas of Concern</li>
+        <p>Environmental justice areas of concern within the Boston Region MPO municipalities are specific neighborhoods with high concentrations of low-income or minority residents. More precisely, an environmental justice area of concern is a cluster of transportation analysis zones (TAZs) that meet the MPO’s income or minority criteria. In general, the TAZs in these clusters have to have at least 200 low-income or minority residents (nonwhite or Hispanic) each. Low-income and minority criteria are:</p>
+                <ul>
+                    <li>Low-income: A median household income at or below 60 percent of the 2010 MPO-region median household income (60 percent of the region’s median household income of $70,827 was $42,497 in 2010)</li>
+                    <li>Minority: A population that is more than 50 percent minority (nonwhite or Hispanic)</li>
+                </ul>
+        <p>The threshold used by the MPO to define whether a minority population is present in a specific area is based on the FTA’s draft environmental justice circular: a significant minority population may be present if the minority population percentage of the affected area is “meaningfully greater” than the minority population percentage in the general population, and a minority population greater than 50 percent is always considered meaningfully greater. Although the “meaningfully greater” definition is not included in the final circular (C 4703.1) published in 2012, it is used by the MPO to focus public outreach for the Transportation Equity Program on the areas with the greatest potential for reaching minority populations.</p>
+        <p>A TAZ is a unit of geography used by the Boston Region MPO’s regional travel demand model, which predicts future travel patterns for transportation-planning purposes. The Boston region is divided into 1,943 TAZs for travel modeling.</p>
+    
+    <li class="subdivision_heading">Title VI Areas</li>       
+         <p>Title VI of the Civil Rights Act of 1964 requires that all recipients of federal funds, including MPOs, demonstrate that they do not discriminate on the basis of race, color, or national origin in their programs, activities, or services. The data displayed on this map use the definition of a “minority area” found in FTA Title VI circular (C 4702.1B) published in 2012: a TAZ (or other geographic area) with a minority population greater than the overall MPO region’s average, which for the Boston Region MPO is 27.8 percent. This is different from the threshold for defining a minority area that is used for Environmental Justice Areas of Concern; however, the Title VI map displays income data using the same definition of low-income that is used to determine Environmental Justice Areas of Concern. 
+        The data displayed on the Title VI map are used to evaluate the benefits and burdens of proposed transportation projects in the MPO’s Long-Range Transportation Plan and to evaluate projects in its Transportation Improvement Program.
+        </p>
+    </ul>
+    
+<h3>Pavement Condition</h3>
+<p>Pavement condition is calculated based on pavement roughness and riding comfort and uses the standard of “international roughness index” (IRI). IRI is a universal roughness rating statistic and is expressed in inches per mile. It is measured using an Automatic Road Analyzer, which is a multipurpose pavement data collection vehicle equipped with onboard sensors and computers that allow the measurement of all significant parameters of pavement condition. Pavement is then classified as follows:</p>
+    <ul>
+        <li class="subdivision_heading">Good: IRI Roughness Range 0 to 190 inches per mile</li>
+        <li class="subdivision_heading">Fair: IRI Roughness Range 191 to 320 inches per mile</li>
+        <li class="subdivision_heading">Poor: IRI Roughness Range greater than 320 inches per mile</li>
+    </ul>
+    
+<h3>Volume-to-Capacity Ratio</h3>
+<p>The volume-to-capacity ratio is an indication of the operational quality of a roadway segment. A roadway reaches capacity as the volume-to-capacity ratio approaches 1.</p>
+
+<h3>Equivalent Property Damage Only (EPDO)</h3>
+<p>The Massachusetts Department of Transportation identifies “crash clusters” using crash reports provided by its Registry of Motor Vehicles Division. They determine the locations of clusters based on the number of crashes that occur within a certain distance of an intersection. The clusters are ranked based on the sum of the Equivalent Property Damage Only (EPDO) values of the crashes within the clusters. EDPO values are calculated by giving a crash a score of 10 if it involves a fatality, 5 if a personal injury is involved, and 1 if the crash results in property damage only. </p>
+<h3>Speed Index</h3>
+<p>The speed index is the ratio of observed speed to the posted speed limit. This information is used as a criterion in selecting bottleneck locations.</p>
+<h3>Travel Time Index</h3>
+<p>The travel time index is the ratio of the travel time during the peak period to the time required to make the same trip at free-flow speeds. A value of 1.3, for example, indicates that a 20-minute free-flow trip requires 26 minutes during the peak period. This information is used as a criterion in selecting bottleneck locations.</p>
+<h3>Description of Transportation Analysis Zones</h3>
+<p>Many of the maps show information by transportation analysis zone (TAZ). A TAZ is a unit of geography used by the Boston Region MPO’s regional travel demand model, which predicts future travel patterns for transportation-planning purposes. The Boston Region MPO area is divided into 1,943 TAZs. A description of each TAZ can be found <a href="ftp://ctps.org/pub/LRTP/TAZ_Descriptions.xlsx" target="_blank" id="TAZ_table" title="link to table listing TAZs">in this table</a>.</p>
+
+<br />
+
+<div id="closePopup">
+	<span type="button"	class="button" onclick="return targetopener(this,true,true)">Close window</span>     
+</div>			<!--   END OF CLOSELINK  -->
+
+
+
+</div>			<!--   END OF BIGBOX2    -->
+
+</body>
+
+</html>

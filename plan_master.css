@@ -1,0 +1,368 @@
+/* CSS file for LRTP 2040 ("Destination 2040") Needs Assessment app.  */
+
+/* Rules for the CTPS header. */
+.ctpsHeader{
+	height:59px;
+	background-color:white
+}
+
+.lightBlue{
+	height:27px;
+	width:100%;
+	background-color:#7DA1C4;
+	z-index:10;
+}
+
+.darkBlue{
+	height:16px;
+	width:100%;
+	background-color:rgb(13,72,127);
+	z-index:10;
+}
+
+#banner{
+	position:relative;
+	height:100%;
+	left:2%;
+	top:-43px;
+	z-index:15;
+	border: none;
+}
+
+#top_heading{
+    position: relative;
+    margin-top: -28px;
+    margin-left: 20px;
+}
+
+/*   buttons across top of page (on top of map)   */
+.start_bank {            
+    display: inline;   
+    /* padding: 10px; */
+    /* margin-left: 10px; */
+}
+
+.midfont {
+    line-height: 1.3em;
+    font-size: 0.9em;
+    font-weight: bold;
+	color:  #1d52c2;
+}
+
+.fieldset_heading {
+    line-height: 1.1em;
+    font-size: 0.85em;
+    font-weight: bold;
+    font-style: italic;   
+}
+
+a:link{
+    line-height: 1.1em;
+}
+
+
+a:link.tables {
+    line-height: 1.3em;
+}
+
+a:hover {
+    color: red;
+}
+
+
+.offscreen {
+	position: absolute;
+	left: -500em;
+	top: -100em;
+}
+
+/*  General:  Page and fonts   */
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {	
+    width: 1520px;
+	font: 80% verdana, sans-serif;
+	line-height: 1.0;
+/*	color: #12127d;   */
+    color: #0000ff;
+	margin-left: 10px;
+	padding: 10px;
+    background-color: #fff;
+}
+
+h1 {
+	line-height: 1.8em;
+/*	color: #1d52c2;    */
+    color: #fff;
+	font-size: 1.3em;
+}
+
+h2 {
+	font-size: 1.2em;
+	color:  #143987;          
+	line-height: 1.2em;
+}
+
+h3 {
+	font-size: .9em;
+	line-height: 1.1em;
+}
+
+
+/* ***** Left side of page ***** */
+#left_wrapper {
+	float: left;
+	width: 250px;
+	margin-top: 5px;
+	/* border: 2px solid red; */
+}
+
+/* These now all have the same styling - replace with single rule for a class. -- BK 06/25/18 */
+#legend_wrapper_towns, #legend_wrapper_1, #legend_wrapper_2, #legend_wrapper_3, #legend_wrapper_4, #legend_wrapper_5  {
+    width: 250px;	
+    height: auto;	
+    display: block;
+	margin-top: 5px;
+	margin-left: 5px;	
+}
+
+#legend_div .legend_text {                              /*      HEADING TEXT   */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.0em;
+	font-style: italic;
+	font-weight: bold;
+    line-height: 1.0em;
+	color: #1d52c2;	
+}
+
+.legend-label {                                         /*      ITEM TEXT  */  
+    line-height: 1.5em;     
+/*    margin-left: 5px;    */
+    font-size: 0.9em;
+    color: black  !important;
+}
+
+
+/* ***** Right side of page ***** */
+#right_wrapper {
+	/* float: right; */
+	margin-left: 260px;
+	width: 1260px;
+	/* border: 2px solid green; */
+}
+
+#map {
+	float: left;
+	display: inline-block;
+	margin-top: 5px;
+	float: left;
+	width: 700px;
+/*	height:600px;     */
+    height: 550px;
+	border: 1px solid #aeaeae;
+}
+/* Don't display OpenLayers attribution */
+.ol-attribution {
+	display: none;
+}
+#top_wrapper { 		/* This would be better named "right top." Formerly, this was top_wrapper_top_half. */
+	margin-left: 710px;
+	height: 550px;
+	width: 550px; 
+	/* border: 2px solid blue; */
+}
+
+/* Rules to style contents of upper right hand part of page. */
+/* Two combo boxes for selecting subregion for zooming in and for data table display */
+.subregion_select{          
+    margin-left: 40px;     
+}
+/* Used multiple times to force inline display of nominally block components */
+.oneline {                                                  
+    display: inline;
+}
+
+/* Hide and unhide divs & other elements     */
+/* Used for elements that disappear off page when set to invisible, making everything else move up */
+.hidden {                                                   
+    display: none;   
+}
+/* Used for elements that leave a hole in the page when set to invisible, so other elements don't move */
+.hidden2 {                                                  /
+	visibility: hidden;   
+}
+.unhidden {
+    display: block;   
+}
+.unhidden2 {
+	visibility: visible;  
+}
+
+/* Rules added by BK on 02/20/18 */
+.select_box_div {
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.select_box_div select {
+	width: 345px;
+}
+.select_box_div_nested_1 {
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 20px;
+}
+.select_box_div_nested_1 select {
+	width: 345px;
+}
+
+.button_bank {
+    position: relative;
+    float: right;
+    margin-top: -60px;
+    height: 30px; 
+}
+
+/* Obsolete rule: "map_button" rule now replaced by "map_button_v2" rule */
+.map_button {   
+    float: right;
+    width: 110px;
+    margin-top: 40px;
+}
+.map_button_v2 {
+	width: 170px;
+}
+
+.help_line {
+    line-height: 1.9em;
+    margin-left: 10px;
+    font-size: .85em;
+}
+
+.zoom_line {
+    line-height: 1.1em;
+    margin-left: 10px;
+    font-size: .85em;
+}
+
+.hilit {
+    color: #ff1111;  
+    font-style: italic;
+    font-weight: bold;
+    font-size: .9em;
+}
+
+/* Bottom of page: rules for tabs and tables */
+/*      TABLE SELECTION    */
+
+#bottom_wrapper {
+	margin-left: 260px;
+	margin-top: 10px;
+	width: 1260px;
+	min-height: 310px;
+	/* border: 2px solid brown; */
+}
+
+#mytabs, #mytabs2, #mytabs3 {
+    margin-top: -5px;
+    overflow:  auto;
+}
+
+.tabsMenu {
+    width: 800px; 			/* Change from 600px */
+    /* overflow: auto; */ 	/* Commenting this out removes the scroll arrows rendered on the same line as the tabs. */
+}
+
+#my_buttons {
+	float: left;
+}
+
+#TR_buttons {
+	float: left;
+}
+
+#searchForTown {
+/*	width: 70px;  */
+}
+
+#getStuff {
+	width: 100px;  
+}
+
+/*
+#clearTable {
+	width: 70px;  
+}
+*/
+
+.town_box{														/*  text box into which town names typed - Now a fossil.  */
+	margin-left: 40px;
+	margin-top: -85px;
+/*	position: relative;   */ 
+}
+
+.table_directions{
+	font: 100% verdana, sans-serif;
+	width: 300px;
+	margin-top: 8px;
+	margin-bottom: 8px;	
+	text-align: left;
+	line-height: 1.5;	
+	color: #05244B;   
+}
+
+.wrappedElement td {
+        border: 1px solid #cc0066 !important;
+        background-color: #ffff99 !important;
+      }
+
+#all_clear_tables{                                             /*  not used right now--I think the #clearTable button above is enough.....    */
+    float: right;
+    margin-top: 10px;
+}
+
+/*  TABLE STYLING--TO BE MODIFIED   */
+
+/*  made specific to data tables so that 'close' button does not get unwitting borders  */
+#pop_table, #hh_table, #emp_table, #eld_table, #other_table, #crash_table, #spd_idx_table, #tt_table, #VOC_table, #airport_table, #PRlots_table, #boatdocks_table, 
+    #bikes_table, #CRStn_table{
+	border: 1px solid blue;  
+/*	border-collapse: collapse;   */
+	background-color: #ffffff;
+	padding: 3px;   
+}
+
+#pop_table caption, #hh_table caption, #emp_table caption, #eld_table caption, #other_table caption, #crash_table caption, #spd_idx_table caption, #tt_table caption, #VOC_table caption, #airport_table caption, 
+    #PRlots_table caption, #boatdocks_table caption, #bikes_table caption,  #CRStn_table caption{
+    line-height: 140%;
+    padding-bottom: 10px;
+}
+
+#pop_table th, #hh_table th, #emp_table th, #eld_table th, #other_table th, #crash_table th, #spd_idx_table th, #tt_table th, #VOC_table  th, #airport_table th, #PRlots_table th, #boatdocks_table th, 
+    #bikes_table th, #CRStn_table th{
+/*	border: 1px solid blue;     */
+/*	background-color: #bfcff3; */
+    background-color: #efefef;
+	padding: 3px;
+	font-size: 90%;
+    line-height: 120%;
+}
+
+/*  made specific to data tables so that 'close' button (created by ExtJS) does not get unwitting borders  */
+#pop_table td, #hh_table td, #emp_table td, #eld_table td, #other_table td, #crash_table td, #spd_idx_table td, #tt_table td, #VOC_table td, #airport_table td, #PRlots_table td, #boatdocks_table td, 
+    #bikes_table td, #CRStn_table td{
+	border: 1px solid #efefef;
+	padding: 3px;        
+/*	background-color: #f2f6fe;   */
+    background-color: #ffffff;
+}
+
+#pop_grid, #hh_grid, #emp_grid, #eld_grid, #other_demog_grid, #crash_grid, #spd_idx_grid, #tt_grid, #VOC_grid, #airport_grid, #PRlots_grid , #boatdocks_grid, #bikes_grid, #CRStn_grid {
+    max-width: 1200px; /* Change from 600px */
+    max-height: 280px;
+    overflow: auto;
+}

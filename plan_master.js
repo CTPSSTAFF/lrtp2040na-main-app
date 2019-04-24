@@ -68,7 +68,7 @@ CTPS.lrtpApp.mapZoom = 3.0;
 CTPS.lrtpApp.initialExtent = [182154.0280675815, 862336.7599726944, 283662.5148839877, 942093.4281855851];
 
 // Setting this to true adds the OpenLayers layer switcher control to the map.
-CTPS.lrtpApp.debugFlag = true;
+// CTPS.lrtpApp.debugFlag = true;
 
 // Cached value of corridor selected by user. ??? Why was this done??? 
 // -- BK 02/06/2018
@@ -2837,10 +2837,12 @@ CTPS.lrtpApp.init = function(){
 	// 
 	// N.B. The OL 3/4 layer switcher control displayed layers in *inverse* order with respect
 	// to the order in which they were added to the map. This feature/bug was fixed by BK on 02/07/2018.
+/*
 	if (CTPS.lrtpApp.debugFlag) {
 		var layerSwitcher = new ol.control.LayerSwitcher({ 'tipLabel' : 'Layers' });
 		CTPS.lrtpApp.map.addControl(layerSwitcher);
 	}
+*/
 
 	// Define on-click event handler for OpenLayers map.
     CTPS.lrtpApp.map.on('click', CTPS.lrtpApp.onClickHandler);

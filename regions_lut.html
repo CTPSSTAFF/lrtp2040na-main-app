@@ -82,30 +82,29 @@ return false;
 }
 
 function createTable(){
-   var szTbl = '<table><caption>CODES FOR MODELING DISTRICTS</caption><thead><th>DISTRICT CODE</th><th>INCLUDED TOWNS</th></thead>';
-   var district, dist_description;
+   var i;
+   var district_number, district_description;   
+   var szTbl1 = '<table><caption>CODES FOR MODELING DISTRICTS</caption><thead><th>CODE</th><th>INCLUDED TOWNS</th></thead>';
    var rec = [];
-   var rec = MPMUTILS.modelRegions_2012;
+   var rec = MPMUTILS.modelDistricts_2016;
    for (i = 0; i < rec.length; i++) {           
-        district = rec[i][0];
-        dist_description = rec[i][1];
-        szTbl += '<tr><td>' + district + '</td><td>' + dist_description + '</td></tr>'; 
+        district_number = rec[i][0];
+        district_description = rec[i][2];
+        szTbl1 += '<tr><td>' + district_number + '</td><td>' + district_description + '</td></tr>'; 
     }
+    szTbl2 += '</table>';
+    
+    var szTbl2  = '<table><caption>CODES FOR EXTERNAL MODELING DISTRICTS</caption><thead><th>CODE</th><th>AREA</th></thead>';
     var rec2 = [];
-    var rec2 = MPMUTILS.externals_2012;
-    district = '';
-    dist_description = '<strong>EXTERNAL ZONES:</strong>';
-    szTbl += '<tr><td>' + district + '</td><td>' + dist_description + '</td></tr>';
+    var rec2 = MPMUTILS.externals_2016;
     for (i = 0; i < rec2.length; i++) {           
-        district = rec2[i][0];
-        dist_description = rec2[i][1];
-        szTbl += '<tr><td>' + district + '</td><td>' + dist_description + '</td></tr>'; 
+        district_number = rec2[i][0];
+        district_description = rec2[i][2];
+        szTbl2 += '<tr><td>' + district_number + '</td><td>' + district_description + '</td></tr>'; 
     }    
-    szTbl += '</table>';
-    document.getElementById('regions_table').innerHTML = szTbl;
+    szTbl2 += '</table>';
+    document.getElementById('regions_table').innerHTML = szTbl1 + szTbl2;
 }
-
-
 
 </script>
 

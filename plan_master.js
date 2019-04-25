@@ -67,10 +67,10 @@ CTPS.lrtpApp.mapCenter = [232908.27147578463, 902215.0940791398];
 CTPS.lrtpApp.mapZoom = 3.0;
 CTPS.lrtpApp.initialExtent = [182154.0280675815, 862336.7599726944, 283662.5148839877, 942093.4281855851];
 
-// Setting this to true adds the OpenLayers "V3" layer switcher control to the map.
+// Setting this boolean variable to true adds the OpenLayers "V3" layer switcher control to the map.
 // Note: This is the "older", i.e., "V3" version of Matt Walker's OpenLayers layer switcher control.
 // Details may be found at: https://github.com/walkermatt/ol3-layerswitcher
-CTPS.lrtpApp.addLayerSwitcher = true;
+CTPS.lrtpApp.addLayerSwitcher = false;
 
 // Cached value of corridor selected by user. ??? Why was this done??? 
 // -- BK 02/06/2018

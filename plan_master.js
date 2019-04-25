@@ -67,8 +67,10 @@ CTPS.lrtpApp.mapCenter = [232908.27147578463, 902215.0940791398];
 CTPS.lrtpApp.mapZoom = 3.0;
 CTPS.lrtpApp.initialExtent = [182154.0280675815, 862336.7599726944, 283662.5148839877, 942093.4281855851];
 
-// Setting this to true adds the OpenLayers layer switcher control to the map.
-// CTPS.lrtpApp.debugFlag = true;
+// Setting this to true adds the OpenLayers "V3" layer switcher control to the map.
+// Note: This is the "older", i.e., "V3" version of Matt Walker's OpenLayers layer switcher control.
+// Details may be found at: https://github.com/walkermatt/ol3-layerswitcher
+CTPS.lrtpApp.addLayerSwitcher = true;
 
 // Cached value of corridor selected by user. ??? Why was this done??? 
 // -- BK 02/06/2018
@@ -2832,17 +2834,14 @@ CTPS.lrtpApp.init = function(){
 
 	// Layer switcher control
 	// OL3/4 does not support a native layer switcher control.
-	// However, an add-in has been developed: https://github.com/walkermatt/ol-layerswitcher
-	// For the time being, we just enable this if in debug mode.
+	// However, an add-in has been developed: https://github.com/walkermatt/ol3-layerswitcher
+	// For the time being, we only enable this if an internal boolean flag has been set.
 	// 
-	// N.B. The OL 3/4 layer switcher control displayed layers in *inverse* order with respect
-	// to the order in which they were added to the map. This feature/bug was fixed by BK on 02/07/2018.
-/*
-	if (CTPS.lrtpApp.debugFlag) {
+	if (CTPS.lrtpApp.addLayerSwitcher) {
 		var layerSwitcher = new ol.control.LayerSwitcher({ 'tipLabel' : 'Layers' });
 		CTPS.lrtpApp.map.addControl(layerSwitcher);
 	}
-*/
+
 
 	// Define on-click event handler for OpenLayers map.
     CTPS.lrtpApp.map.on('click', CTPS.lrtpApp.onClickHandler);

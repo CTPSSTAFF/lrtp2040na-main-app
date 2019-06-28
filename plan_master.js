@@ -58,7 +58,7 @@
 //    ancillary functions.
 //
 // -- Ben Krepp 01/31/2018, 02/20/2018, 03/14/2018
-//    Updates to some data sources 06/13/2018, 11/20/2018
+//    Updates/ changes to some data sources 06/13/2018, 11/20/2018, 06/28/2019
 
 var CTPS = {};
 CTPS.lrtpApp = {};
@@ -112,11 +112,8 @@ PLAN.gs_layers = {
 	'crash_bikes_pt'	:	'postgis:dest2040_crash13_15_h_bk_pt',	 
 	'crash_peds_poly'	:	'postgis:dest2040_crash13_15_h_ped_poly',		
 	'crash_peds_pt'		:	'postgis:dest2040_crash13_15_h_ped_pt',		
-	'truck_gen'			:	'postgis:plan2035_truck_gen_pt',			// *** To be updated by Bill Kuttner
-	'rail_freight'		:	'postgis:dest2040_freight_op_arc',			// N.B. For whaterver reason, table name doesn't include 'freight'
-	'spd_idx_table'		:	'postgis:plan2040_spd_index_tbl',			// *** To be updated by Bill Kuttner
-	'tt_table'			:	'postgis:plan2040_ttime_index_tbl',			// *** To be updated by Bill Kuttner
-	'VOC_table'			:	'postgis:plan2040_voc_2014_tbl'				// *** To be updated by Ben Dowling or Drashti Joshi or Ethan Ebinger or Bill Kuttner or (?)
+	'truck_gen'			:	'postgis:plan2035_truck_gen_pt',			// Re-using data from last plan, per A. McGahan 6/27/19
+	'rail_freight'		:	'postgis:dest2040_freight_op_arc'			// N.B. For whaterver reason, table name doesn't include 'freight'
 };
 // ***********************************************************************************************************************************
 // The following data structures were previously kept in a separate file named "PLAN.js", for no apparent reason.
@@ -432,15 +429,6 @@ PLAN.download_info = {
 							},
 	'Top 5% Crashes': 		{ typename		: PLAN.gs_layers.crash_layer_poly,
 							  propertyname	: "epdo,l1street,l2street,towns,plan2035_radial_corr,crashcount,circumferential_corridor" 
-							},
-	'Volume-to-Capacity Ratio'	:	{ typename		: PLAN.gs_layers.VOC_table,
-									  propertyname	: "plan2035_radial_corr,circumferential_corridor,roadway_type,peak_period,roadway,voc"
-									},
-	'Speed Index':			{ typename		: PLAN.gs_layers.spd_idx_table,
-							  propertyname	: "year,plan2035_radial_corr,circumferential_corridor,peakperiod,route,direction,from_to,speedindex" 
-							},
-	'Travel Time Index':	{ typename		: PLAN.gs_layers.tt_table,
-							  propertyname	: "year,plan2035_radial_corr,circumferential_corridor,peakperiod,route,direction,from_to,traveltimeindex"
 							},
 	'Commuter Rail Stations': { typename		:PLAN.gs_layers.CR_stns,
 								propertyname	: "station,line_brnch,plan2035_radial_corr"
@@ -1821,8 +1809,8 @@ $(document).ready(function(e){
 										colDesc		: 	colDescCrash
 									});			
 									crashGrid.loadArrayData(myData); 
-									// Cascading call to get VOC data.
-									displayVOCIndex(cql_Filter, tabsub_txt); 
+                                    // Cascading call to get commuter rail stations.
+									displayCRStations(cql_Filter, tabsub_txt);
 								},  
 				failure		: 	function (qXHR, textStatus, errorThrown ) {
 									alert('WFS request  to get crash data failed.\n' +
@@ -1832,203 +1820,7 @@ $(document).ready(function(e){
 		}); 
 	}; // displayCrashes()
 	
-	// Helper function (b) displayVOCIndex()
-	//	
-	var displayVOCIndex = function(cql_Filter, tabsub_txt) {
-		var items_TR = "data_key,plan2035_radial_corr,roadway_type,peak_period,roadway,voc";
-		var szUrl = CTPS.lrtpApp.szWFSserverRoot + '?';		
-		$('#VOC_grid').html('');
-		
-		szUrl += '&service=wfs&version=1.0.0&request=getfeature';
-		szUrl += '&typename=' + PLAN.gs_layers.VOC_table;
-		szUrl += '&outputformat=json';
-		szUrl += '&cql_filter=' + cql_Filter;
-		szUrl += '&propertyname=' + items_TR;
-		$.ajax({ url		: szUrl,
-				 type		: 'GET',
-				 dataType	: 'json',
-				 success	: 	function (data, textStatus, jqXHR) {
-									var reader = new ol.format.GeoJSON();
-									var aFeatures = reader.readFeatures(jqXHR.responseText);
-									if (aFeatures.length === 0) {
-										alert('No features found--try another');
-										return;
-									};
-									// Load, Populate Table Data Stores
-									var k, attrs,  myData = [], VOC_grid = {};
-									for (k = 0; k < aFeatures.length; k++) {
-										attrs = aFeatures[k].getProperties();
-										myData[k] = {
-											'INDEX'                 : +attrs['data_key'], 
-											'YEAR'                  : attrs['year'],
-											'CORRIDOR'              : attrs['plan2035_radial_corr'], 
-											'ROAD_TYPE'             : attrs['roadway_type'],       
-											'PEAK_PERIOD'           : attrs['peak_period'], 
-											'ROADWAY'               : attrs['roadway'], 
-											'VOC'                   : attrs['voc']
-										};
-									};
-									// Sort JSON Array
-									myData.sort(SortByIndex);
-									// Create Accessible Grids from Table Data Stores
-									var colDescVOC = [
-										{ header : 	'Roadway', dataIndex : 'ROADWAY', width: '400px', style: '' },
-										{ header : 	'Road Type', dataIndex : 'ROAD_TYPE', width: '100px', style: '' },
-										{ header : 	'Peak Period', dataIndex : 'PEAK_PERIOD' , width: '70px', style: ''},
-										{ header : 	'Volume/Capacity<br/>Ratio', dataIndex : 'VOC', width: '220px', style: '' }
-									];
-									VOC_grid = new AccessibleGrid( { divId 		:	'VOC_grid',
-										tableId 	:	'VOC_table',
-										summary		: 	'rows are commuter rail stations within selected region and columns are station name and commuter rail line',
-										caption		:	'Highest Current Volume-Capacity Ratios for: ' + tabsub_txt + ' Region',
-										// ariaLive	:	'assertive',
-										colDesc		: 	colDescVOC
-									});
-									VOC_grid.loadArrayData(myData);
-									// Cascading call to get speed index data.
-									displaySpeedIndex(cql_Filter, tabsub_txt);
-								},  
-				failure		: 	function (qXHR, textStatus, errorThrown ) {
-									alert('WFS request to get VOC data failed.\n' +
-											'Status: ' + textStatus + '\n' +
-											'Error:  ' + errorThrown);
-								}
-		}); 
-	}; // displayVOCIndex()	
-	
-	// Helper function (c) displaySpeedIndex()
-	//	
-	var displaySpeedIndex = function(cql_Filter, tabsub_txt) {
-		var items_TR = "year,plan2035_radial_corr,circumferential_corridor,peakperiod,route,direction,from_to,speedindex";  
-		var szUrl = CTPS.lrtpApp.szWFSserverRoot + '?';
-		$('#spd_idx_grid').html('');
-		
-		szUrl += '&service=wfs&version=1.0.0&request=getfeature';
-		szUrl += '&typename=' + PLAN.gs_layers.spd_idx_table;
-		szUrl += '&outputformat=json';
-		szUrl += '&cql_filter=' + cql_Filter;
-		szUrl += '&propertyname=' + items_TR;
-		$.ajax({ url		: szUrl,
-				 type		: 'GET',
-				 dataType	: 'json',
-				 success	: 	function (data, textStatus, jqXHR) {
-									var reader = new ol.format.GeoJSON();
-									var aFeatures = reader.readFeatures(jqXHR.responseText);
-									if (aFeatures.length === 0) {
-										alert('No features found--try another');
-										return;
-									};
-									// Load, Populate Table Data Stores
-									var k, attrs, myData = [], spd_idx_grid = {};
-									for (k = 0; k < aFeatures.length; k++) {
-										attrs = aFeatures[k].getProperties();
-										myData[k] = {
-											'YEAR'				: attrs['year'], 
-											'PEAKPERIOD'		: attrs['peakperiod'],
-											'ROUTE'				: attrs['route'], 
-											'DIRECTION'			: attrs['direction'],       
-											'FROM_TO'			: attrs['from_to'], 
-											'SPEEDINDEX'		: attrs['speedindex'], 
-											'RADIAL_CORRIDOR'	: attrs['plan2035_radial_corr']
-										};
-									};
-									// Sort JSON Array by peak period.
-									myData.sort(SortByPeriod);
-									// Create Accessible Grids from Table Data Stores
-									var colDescSpdIdx = [
-										{ header : 	'Route', dataIndex : 'ROUTE', width: '120px', style: '' },
-										{ header : 	'From/To', dataIndex : 'FROM_TO', width: '500px', style: '' },
-										{ header : 	'Peak Period', dataIndex : 'PEAKPERIOD' , width: '90px', style: ''},
-										{ header : 	'Direction', dataIndex : 'DIRECTION', width: '120px', style: '' },
-										{ header : 	'Speed Index', dataIndex : 'SPEEDINDEX', width: '180px', style: '' }
-									];
-									spd_idx_grid = new AccessibleGrid({
-										divId 		:	'spd_idx_grid',
-										tableId 	:	'spd_idx_table',
-										summary		: 	'rows are commuter rail stations within selected region and columns are station name and commuter rail line',
-										caption		:	'Highest Speed Index Values for: ' + tabsub_txt + ' Region' ,
-										//ariaLive	:	'assertive',
-										colDesc		: 	colDescSpdIdx
-									});			
-									spd_idx_grid.loadArrayData(myData);
-									// Cascading call to get travel time index data.
-									displayTTIndex(cql_Filter, tabsub_txt);
-								},  
-				failure		: 	function (qXHR, textStatus, errorThrown ) {
-									alert('WFS request to get speed index data failed.\n' +
-											'Status: ' + textStatus + '\n' +
-											'Error:  ' + errorThrown);
-								}
-		}); 
-	}; // displaySpeedIndex()
-
-	// Helper function (d) displayTTIndex()
-	//
-	var displayTTIndex = function(cql_Filter, tabsub_txt) {
-		var items_TR = "year,plan2035_radial_corr,circumferential_corridor,peakperiod,route,direction,from_to,traveltimeindex";  
-		var szUrl = CTPS.lrtpApp.szWFSserverRoot + '?';		
-		$('#tt_grid').html('');
-
-		szUrl += '&service=wfs&version=1.0.0&request=getfeature';
-		szUrl += '&typename=' + PLAN.gs_layers.tt_table;
-		szUrl += '&outputformat=json';
-		szUrl += '&cql_filter=' + cql_Filter;
-		szUrl += '&propertyname=' + items_TR;
-		$.ajax({ url		: szUrl,
-				 type		: 'GET',
-				 dataType	: 'json',
-				 success	: 	function (data, textStatus, jqXHR) {
-									var reader = new ol.format.GeoJSON();
-									var aFeatures = reader.readFeatures(jqXHR.responseText);
-									if (aFeatures.length === 0) {
-										alert('No features found--try another');
-										return;
-									};
-									// Load, Populate Table Data Stores
-									var k, attrs, myData = [], tt_grid = {};
-									for (k = 0; k < aFeatures.length; k++) {
-										attrs = aFeatures[k].getProperties();
-										myData[k] = { 
-											'YEAR'                 : attrs['year'], 
-											'PEAKPERIOD'           : attrs['peakperiod'],
-											'ROUTE'                : attrs['route'], 
-											'DIRECTION'            : attrs['direction'],       
-											'FROM_TO'              : attrs['from_to'], 
-											'TRAVELTIMEINDEX'      : attrs['traveltimeindex'], 
-											'RADIAL_CORRIDOR'      : attrs['plan2035_radial_corr']
-										};                                        
-									};
-									// Sort JSON Array by peak period
-									myData.sort(SortByPeriod);
-									// Create Accessible Grids from Table Data Stores
-									var colDescTTIdx = [                                                           
-										{ header : 	'Route', 	              dataIndex : 'ROUTE', width: '120px', style: '' },
-										{ header : 	'From/To', 	              dataIndex : 'FROM_TO', width: '500px', style: '' },
-										{ header : 	'Peak Period', 			  dataIndex : 'PEAKPERIOD' , width: '90px', style: ''},                                    
-										{ header : 	'Direction', 	          dataIndex : 'DIRECTION', width: '120px', style: '' },
-										{ header : 	'Travel Time Index', 	  dataIndex : 'TRAVELTIMEINDEX', width: '180px', style: '' }
-									];
-									tt_grid = new AccessibleGrid({
-										divId 		:	'tt_grid',
-										tableId 	:	'tt_table',
-										summary		: 	'rows are commuter rail stations within selected region and columns are station name and commuter rail line',
-										caption		:	'Highest Travel Time Index Values for: ' + tabsub_txt + ' Region',
-										//ariaLive	:	'assertive',
-										colDesc		: 	colDescTTIdx
-									});			
-									tt_grid.loadArrayData(myData);
-									// Cascading call to get commuter rail stations.
-									displayCRStations(cql_Filter, tabsub_txt);
-								},  
-				failure		: 	function (qXHR, textStatus, errorThrown ) {
-									alert('WFS request to get travel time index data failed.\n' +
-											'Status: ' + textStatus + '\n' +
-											'Error:  ' + errorThrown);
-								}
-		});
-	}; // displayTTIndex()
-
-	// Helper function (e) displayCRStations()
+	// Helper function (b) displayCRStations()
 	//
 	var displayCRStations = function(cql_Filter, tabsub_txt) { 
 		var items_TR = "station,line_brnch,plan2035_radial_corr";  
@@ -2036,7 +1828,7 @@ $(document).ready(function(e){
 		$('#CRStn_grid').html('');	
 
 		szUrl += '&service=wfs&version=1.0.0&request=getfeature';
-		szUrl += '&typename=' +PLAN.gs_layers.CR_stns;
+		szUrl += '&typename=' + PLAN.gs_layers.CR_stns;
 		szUrl += '&outputformat=json';
 		szUrl += '&cql_filter=' + cql_Filter;
 		szUrl += '&propertyname=' + items_TR;

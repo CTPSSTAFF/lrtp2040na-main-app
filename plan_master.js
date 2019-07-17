@@ -91,15 +91,15 @@ PLAN.gs_layers = {
 	'taz2727_donut'		: 	'postgis:dest2040_taz_demographic_donut',	// Uses only stops on primary-variation bus routes as the bus part of dissolved buffer/cookie cutter. 
 	'corridors'			: 	'postgis:dest2040_corridors',
 	'central_corr'		:	'postgis:dest2040_circum_corr_poly',
-	'VOClayer'			:	'postgis:dest2040_voc',						// A single layer now contains both 2016 and 2040 data.
+	'VOClayer'			:	'dest2040_viewer:dest2040_voc',				// One layer contains both 2016 and 2040 data. NOTE: This layer resides in the dest2040 GS data store.
 	'towns_layer'		:	'postgis:mgis_towns_polym',
 	'towns_survey_layer':	'postgis:mgis_townssurvey_polym',
-	'major_roads'		:	'postgis:ctps_roadinventory_grouped',		// *** To be updated based on 2016 Road Inventory
+	'major_roads'		:	'postgis:ctps_roadinventory_grouped',		
 	'pavement'			:	'postgis:dest2040_pavement_arc',			
 	'rapid_transit'		:	'postgis:dest2040_mbta_rt_sl_arc',			// Includes Silver Line
 	'CR_arcs'			:	'postgis:dest2040_mbta_cr_arc',	
 	'CR_stns'			:	'postgis:dest2040_mbta_cr_sta_augmented',	// Raw KJ deliverable augmented with attrs for radial and circumferential corridor			
-	'bus_routes'		:	'postgis:dest2040_bus_routes_mbta_2018q1_v2',	// *** To be updated to 2Q 2018 when data is available
+	'bus_routes'		:	'postgis:dest2040_bus_routes_mbta_2018q1_v2',	
 	'airports'			:	'postgis:dest2040_airports_pt',
 	'park_ride_lots'	:	'postgis:dest2040_mdot_park_ride',
 	'seaports'			:	'postgis:dest2040_mdot_seaports_pt',

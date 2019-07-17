@@ -986,12 +986,12 @@ $(document).ready(function(e){
 	// Launch origin-destination page in new window.
 	// 
 	$('#main_OD').click(function(){  
-		window.open('../OD_page/OD_page.html','_blank');
+		window.open('../lrtpNeedsAssessmentApp_OD_page/OD_page.html','_blank');
 	});    
 	// Launch Boston trips page in new window.
 	// 	
 	$('#second_OD').click(function(){  
-		window.open('../Boston_trips/boston_trips.html','_blank');
+		window.open('../lrtpNeedsAssessmentApp_Boston_trips/boston_trips.html','_blank');
 	});
 	
 	// On-click event handlers for buttons on top of map.
